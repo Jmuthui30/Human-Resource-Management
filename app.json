@@ -1,0 +1,51 @@
+{
+  "id": "9b7870b8-859c-4a3b-9e44-c98c1ff5457d",
+  "name": "Human Resource Management",
+  "publisher": "Altair Retro Ltd",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+    {
+     "id": "c9e391e0-3547-4cc5-bb9a-87842b44aa9a",
+     "name": "General Management",
+     "publisher": "JMUTHUI@ALTAIRETRO.COM",
+    "version": "1.0.0.0"
+    },
+    {
+      "id": "63ca2fa4-4f03-4f2b-a480-172fef340d3f",
+      "name": "System Application",
+      "publisher": "Microsoft",
+      "version": " 21.0.46256.46853"
+    },
+    {
+      "id": "437dbf0e-84ff-417a-965d-ed2bb9650972",
+      "name": "Base Application",
+      "publisher": "Microsoft",
+      "version": " 21.0.46256.46853"
+    }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "21.0.0.0",
+  "idRanges": [
+    {
+      "from": 52000,
+      "to": 52999
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+ "runtime": "10.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}

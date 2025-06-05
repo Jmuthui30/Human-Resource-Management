@@ -1,0 +1,47 @@
+page 52143 "Rejected Promotion_Demotions"
+{
+    ApplicationArea = All;
+    CardPageID = "Employee Promotion_Demotion";
+    PageType = List;
+    SourceTable = "Employee Acting Position";
+    SourceTableView = where(Status = filter(Rejected));
+    Caption = 'Rejected Promotion_Demotions';
+    layout
+    {
+        area(content)
+        {
+            repeater(Group)
+            {
+                field(No; Rec.No)
+                {
+                    ToolTip = 'Specifies the value of the No field';
+                }
+                field("Promotion Type"; Rec."Document Type")
+                {
+                    ToolTip = 'Specifies the value of the Promotion Type field';
+                }
+                field("Employee No."; Rec."Acting Employee No.")
+                {
+                    ToolTip = 'Specifies the value of the Employee No. field';
+                }
+                field(Name; Rec.Name)
+                {
+                    ToolTip = 'Specifies the value of the Name field';
+                }
+                field(Status; Rec.Status)
+                {
+                    ToolTip = 'Specifies the value of the Status field';
+                }
+            }
+        }
+    }
+
+    actions
+    {
+    }
+}
+
+
+
+
+

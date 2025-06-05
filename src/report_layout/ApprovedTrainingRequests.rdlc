@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="RequestNo_TrainingRequest">
+          <DataField>RequestNo_TrainingRequest</DataField>
+        </Field>
+        <Field Name="RequestDate_TrainingRequest">
+          <DataField>RequestDate_TrainingRequest</DataField>
+        </Field>
+        <Field Name="EmployeeNo_TrainingRequest">
+          <DataField>EmployeeNo_TrainingRequest</DataField>
+        </Field>
+        <Field Name="EmployeeName_TrainingRequest">
+          <DataField>EmployeeName_TrainingRequest</DataField>
+        </Field>
+        <Field Name="NoSeries_TrainingRequest">
+          <DataField>NoSeries_TrainingRequest</DataField>
+        </Field>
+        <Field Name="Status_TrainingRequest">
+          <DataField>Status_TrainingRequest</DataField>
+        </Field>
+        <Field Name="Designation_TrainingRequest">
+          <DataField>Designation_TrainingRequest</DataField>
+        </Field>
+        <Field Name="NoOfDays_TrainingRequest">
+          <DataField>NoOfDays_TrainingRequest</DataField>
+        </Field>
+        <Field Name="NoOfDays_TrainingRequestFormat">
+          <DataField>NoOfDays_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="TrainingInsitution_TrainingRequest">
+          <DataField>TrainingInsitution_TrainingRequest</DataField>
+        </Field>
+        <Field Name="Venue_TrainingRequest">
+          <DataField>Venue_TrainingRequest</DataField>
+        </Field>
+        <Field Name="TuitionFee_TrainingRequest">
+          <DataField>TuitionFee_TrainingRequest</DataField>
+        </Field>
+        <Field Name="TuitionFee_TrainingRequestFormat">
+          <DataField>TuitionFee_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="PerDiem_TrainingRequest">
+          <DataField>PerDiem_TrainingRequest</DataField>
+        </Field>
+        <Field Name="PerDiem_TrainingRequestFormat">
+          <DataField>PerDiem_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="AirTicket_TrainingRequest">
+          <DataField>AirTicket_TrainingRequest</DataField>
+        </Field>
+        <Field Name="AirTicket_TrainingRequestFormat">
+          <DataField>AirTicket_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="TotalCost_TrainingRequest">
+          <DataField>TotalCost_TrainingRequest</DataField>
+        </Field>
+        <Field Name="TotalCost_TrainingRequestFormat">
+          <DataField>TotalCost_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="CourseTitle_TrainingRequest">
+          <DataField>CourseTitle_TrainingRequest</DataField>
+        </Field>
+        <Field Name="Description_TrainingRequest">
+          <DataField>Description_TrainingRequest</DataField>
+        </Field>
+        <Field Name="PlannedStartDate_TrainingRequest">
+          <DataField>PlannedStartDate_TrainingRequest</DataField>
+        </Field>
+        <Field Name="PlannedEndDate_TrainingRequest">
+          <DataField>PlannedEndDate_TrainingRequest</DataField>
+        </Field>
+        <Field Name="CountryCode_TrainingRequest">
+          <DataField>CountryCode_TrainingRequest</DataField>
+        </Field>
+        <Field Name="TotalCostLCY_TrainingRequest">
+          <DataField>TotalCostLCY_TrainingRequest</DataField>
+        </Field>
+        <Field Name="TotalCostLCY_TrainingRequestFormat">
+          <DataField>TotalCostLCY_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="Currency_TrainingRequest">
+          <DataField>Currency_TrainingRequest</DataField>
+        </Field>
+        <Field Name="Budget_TrainingRequest">
+          <DataField>Budget_TrainingRequest</DataField>
+        </Field>
+        <Field Name="Budget_TrainingRequestFormat">
+          <DataField>Budget_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="Actual_TrainingRequest">
+          <DataField>Actual_TrainingRequest</DataField>
+        </Field>
+        <Field Name="Actual_TrainingRequestFormat">
+          <DataField>Actual_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="Commitment_TrainingRequest">
+          <DataField>Commitment_TrainingRequest</DataField>
+        </Field>
+        <Field Name="Commitment_TrainingRequestFormat">
+          <DataField>Commitment_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="GLAccount_TrainingRequest">
+          <DataField>GLAccount_TrainingRequest</DataField>
+        </Field>
+        <Field Name="BudgetName_TrainingRequest">
+          <DataField>BudgetName_TrainingRequest</DataField>
+        </Field>
+        <Field Name="AvailableFunds_TrainingRequest">
+          <DataField>AvailableFunds_TrainingRequest</DataField>
+        </Field>
+        <Field Name="AvailableFunds_TrainingRequestFormat">
+          <DataField>AvailableFunds_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="NeedSource_TrainingRequest">
+          <DataField>NeedSource_TrainingRequest</DataField>
+        </Field>
+        <Field Name="TrainingObjective_TrainingRequest">
+          <DataField>TrainingObjective_TrainingRequest</DataField>
+        </Field>
+        <Field Name="UserID_TrainingRequest">
+          <DataField>UserID_TrainingRequest</DataField>
+        </Field>
+        <Field Name="CommisionerNo_TrainingRequest">
+          <DataField>CommisionerNo_TrainingRequest</DataField>
+        </Field>
+        <Field Name="CommissionerName_TrainingRequest">
+          <DataField>CommissionerName_TrainingRequest</DataField>
+        </Field>
+        <Field Name="Commissioner_TrainingRequest">
+          <DataField>Commissioner_TrainingRequest</DataField>
+        </Field>
+        <Field Name="GlobalDimension1Code_TrainingRequest">
+          <DataField>GlobalDimension1Code_TrainingRequest</DataField>
+        </Field>
+        <Field Name="GlobalDimension2Code_TrainingRequest">
+          <DataField>GlobalDimension2Code_TrainingRequest</DataField>
+        </Field>
+        <Field Name="TrainingNeed_TrainingRequest">
+          <DataField>TrainingNeed_TrainingRequest</DataField>
+        </Field>
+        <Field Name="Destination_TrainingRequest">
+          <DataField>Destination_TrainingRequest</DataField>
+        </Field>
+        <Field Name="CostofTraining_TrainingRequest">
+          <DataField>CostofTraining_TrainingRequest</DataField>
+        </Field>
+        <Field Name="CostofTraining_TrainingRequestFormat">
+          <DataField>CostofTraining_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="CostofTrainingLCY_TrainingRequest">
+          <DataField>CostofTrainingLCY_TrainingRequest</DataField>
+        </Field>
+        <Field Name="CostofTrainingLCY_TrainingRequestFormat">
+          <DataField>CostofTrainingLCY_TrainingRequestFormat</DataField>
+        </Field>
+        <Field Name="Company_Name">
+          <DataField>Company_Name</DataField>
+        </Field>
+        <Field Name="Comp_Logo">
+          <DataField>Comp_Logo</DataField>
+        </Field>
+        <Field Name="Email">
+          <DataField>Email</DataField>
+        </Field>
+        <Field Name="Website">
+          <DataField>Website</DataField>
+        </Field>
+        <Field Name="Tel_No">
+          <DataField>Tel_No</DataField>
+        </Field>
+        <Field Name="Address">
+          <DataField>Address</DataField>
+        </Field>
+        <Field Name="City">
+          <DataField>City</DataField>
+        </Field>
+        <Field Name="Country">
+          <DataField>Country</DataField>
+        </Field>
+        <Field Name="Post_Code">
+          <DataField>Post_Code</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>
