@@ -824,5 +824,7 @@ permissionset 52000 HRPermissions
         report "Employee Time Sheet" = X,
         report "Master Roll Report new" = X,
         report "Payslipx New" = X,
-        page "Payroll Project Allocation" = X;
+        page "Payroll Project Allocation" = X,
+        tabledata "Cash Payment" = RIMD,
+        table "Cash Payment" = X;
 }

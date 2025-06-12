@@ -34,6 +34,11 @@ page 52251 "Employee Pay Modes"
                 {
                     ToolTip = 'Specifies the value of the Net Pay A/C field';
                 }
+                field(Cash; Rec.Cash)
+                {
+                    ToolTip = 'Specifies the value of the Cash field';
+
+                }
             }
         }
     }

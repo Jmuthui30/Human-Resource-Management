@@ -1075,6 +1075,18 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
                         end;
                     end;
                 }
+                action("Cash Payment")
+                {
+                    Caption = 'Cash Payment Allocation';
+                    RunObject = page "Cash Payment";
+                    RunPageLink = "Employee No" = field("No.");
+                    ToolTip = 'Executes the Assign Deductions action';
+                    ApplicationArea = All;
+                    Promoted = true;
+                    PromotedCategory = Category6;
+                    PromotedIsBig = true;
+                    Image = Payment;
+                }
             }
             group(Payslips)
             {

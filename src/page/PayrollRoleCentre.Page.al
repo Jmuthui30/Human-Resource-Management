@@ -420,6 +420,14 @@ page 52108 "Payroll Role Centre"
                         ToolTip = 'Executes the Net Pay Report action';
                         Caption = 'Net Pay Report';
                     }
+                    action("Net Pay cash Report")
+                    {
+                        Image = "Report";
+                        RunObject = report "Net Pay Cash Payment";
+                        ApplicationArea = All;
+                        ToolTip = 'Executes the Net Pay Report action';
+                        Caption = 'Net Pay Cash Report';
+                    }
                     action("Employee Pay Modes Summary")
                     {
                         Image = "Report";

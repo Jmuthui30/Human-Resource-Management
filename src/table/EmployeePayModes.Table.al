@@ -52,6 +52,10 @@ table 52131 "Employee Pay Modes"
             TableRelation = "G/L Account";
             Caption = 'Net Pay A/C';
         }
+        field(9; Cash; Boolean)
+        {
+
+        }
     }
 
     keys

@@ -1,15 +1,15 @@
-report 52064 "Net Pay Bank Transfer"
+report 52964 "Net Pay Cash Payment"
 {
     ApplicationArea = All;
     DefaultLayout = RDLC;
-    RDLCLayout = './src/report_layout/NetPayBankTransfer.rdl';
-    Caption = 'Net Pay Bank Transfer';
+    RDLCLayout = './src/report_layout/NetPayCashPayment.rdl';
+    Caption = 'Net Pay Cash Payment';
     dataset
     {
         dataitem(Employee; Employee)
         {
             DataItemTableView = sorting("No.") where("Employee Job Type" = const("  "), "Employee type" = filter(<> "Board Member"));
-            RequestFilterFields = "Pay Period Filter", "Pay Mode", "No.";
+            RequestFilterFields = "Pay Period Filter";
 
             column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {
@@ -158,14 +158,14 @@ report 52064 "Net Pay Bank Transfer"
                 if cashPayment.FindFirst() then begin
                     CashAmountNetPay := cashPayment."Cash Amount";
                 end;
-                Message('cash is %1', CashAmountNetPay);
-
-                // Standard Net Pay Calculation: (Allowances) - (Deductions + Loan Interest)
-                Message('allo is %1..#.dec is %2', Employee."Total Allowances", Employee."Total Deductions");
-                NetPay := (Employee."Total Allowances" + Employee."Total Deductions" + Employee."Loan Interest") - (CashAmountNetPay);
+                if Employee."Pay Mode" = 'CASH_MT' then
+                    NetPay := Round(Employee."Total Allowances" + Employee."Total Deductions" + Employee."Loan Interest", RoundPrecision, RoundDirection)
+                else
+                    NetPay := (CashAmountNetPay);
                 NetPay := Round(NetPay, RoundPrecision, RoundDirection);
 
-                // NetPay := Round(Employee."Total Allowances" + Employee."Total Deductions" + Employee."Loan Interest", RoundPrecision, RoundDirection);
+                if NetPay <= 0 then exit;
+
 
 
             end;
