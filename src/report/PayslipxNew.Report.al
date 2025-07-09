@@ -34,9 +34,12 @@ report 52994 "Payslipx New"
             column(TotalStaffCost; TotalStaffCost) { }
             column(BankTransfer; BankTransfer) { }
             column(CashTransfer; CashTransfer) { }
+            column(Employee_s_Bank; "Employee's Bank") { }
             column(Bank_Account_No_; "Bank Account No.") { }
             column(Bank_Branch; "Bank Branch") { }
+            column(Employee_Bank_Name; "Employee Bank Name") { }
             column(Bank_Account_Number; "Bank Account Number") { }
+            column(Employee_Branch_Name; "Employee Branch Name") { }
             column(CoName; CoName)
             {
             }
@@ -53,6 +56,9 @@ report 52994 "Payslipx New"
             {
             }
             column(CompEmail; CompInfo."E-Mail")
+            {
+            }
+            column(UPPERCASE_FORMAT_DateSpecified_0___month_text___year4____; UpperCase(Format(DateSpecified, 0, '<month text> <year4>')))
             {
             }
             trigger OnAfterGetRecord()
@@ -87,15 +93,35 @@ report 52994 "Payslipx New"
                 DeductsRec.Reset();
                 DeductsRec.SETRANGE(DeductsRec.Advance, true);
                 if DeductsRec.Findset() then begin
-                    AssignMatrix.RESET;
-                    AssignMatrix.SETRANGE(AssignMatrix."Payroll Period", DateSpecified);
-                    AssignMatrix.SETRANGE(Type, AssignMatrix.Type::Deduction);
-                    AssignMatrix.SETRANGE(AssignMatrix."Employee No", Employee."No.");
-                    AssignMatrix.SetRange(AssignMatrix.Code, DeductsRec.Code);
-                    IF AssignMatrix.FIND('-') THEN BEGIN
-                        SalaryAdvance := (AssignMatrix.Amount) * -1
-                    END;
+                    repeat
+                        AssignMatrix.RESET;
+                        AssignMatrix.SETRANGE(AssignMatrix."Payroll Period", DateSpecified);
+                        AssignMatrix.SETRANGE(Type, AssignMatrix.Type::Deduction);
+                        AssignMatrix.SETRANGE(AssignMatrix."Employee No", Employee."No.");
+                        AssignMatrix.SetRange(AssignMatrix.Code, DeductsRec.Code);
+                        IF AssignMatrix.FIND('-') THEN BEGIN
+                            SalaryAdvance := (AssignMatrix.Amount) * -1
+                        END;
+                    until DeductsRec.Next() = 0;
                 end;
+
+                // DeductsRec.Reset();
+                // DeductsRec.SETRANGE(DeductsRec.Advance, true);
+                // if DeductsRec.Findset() then begin
+                //     repeat
+                //         Message('dedu is %1', DeductsRec.Code);
+                //         AssignMatrix.RESET;
+                //         AssignMatrix.SETRANGE(AssignMatrix."Payroll Period", DateSpecified);
+                //         AssignMatrix.SETRANGE(Type, AssignMatrix.Type::Deduction);
+                //         AssignMatrix.SETRANGE(AssignMatrix."Employee No", Employee."No.");
+                //         AssignMatrix.SetRange(AssignMatrix.Code, DeductsRec.Code);
+                //         IF AssignMatrix.FIND('-') THEN BEGIN
+                //             Other := (AssignMatrix.Amount) * -1
+                //         END;
+                //     until DeductsRec.Next() = 0;
+                //     Message('other is %1', Other);
+                // end;
+
 
 
                 DeductsRec.Reset();
@@ -112,10 +138,7 @@ report 52994 "Payslipx New"
                 end;
                 //**************************************************************************************************
                 Earn.Reset();
-                Earn.SetRange(Earn."Earning Type", Earn."Earning Type"::"Normal Earning");
-                Earn.SetRange(Earn."Non-Cash Benefit", false);
-                Earn.SetRange(Earn."Basic Salary Code", false);
-                Earn.SetRange(Gratuity, false);
+                Earn.SetRange(Earn."Basic Salary Code", true);
                 if Earn.Find('-') then begin
                     AssignMatrix.RESET;
                     AssignMatrix.SETRANGE(AssignMatrix."Payroll Period", DateSpecified);
@@ -127,25 +150,22 @@ report 52994 "Payslipx New"
                     END;
                 end;
 
-                Earn.Reset();
-                Earn.SetRange(Earn."Earning Type", Earn."Earning Type"::"Normal Earning");
-                Earn.SetRange(Earn."Non-Cash Benefit", false);
-                Earn.SetRange(Earn."Basic Salary Code", false);
-                Earn.SetRange(Gratuity, true);
-                if Earn.Find('-') then begin
-                    AssignMatrix.RESET;
-                    AssignMatrix.SETRANGE(AssignMatrix."Payroll Period", DateSpecified);
-                    AssignMatrix.SETRANGE(Type, AssignMatrix.Type::Earning);
-                    AssignMatrix.SETRANGE(AssignMatrix."Employee No", Employee."No.");
-                    AssignMatrix.SetRange(Code, Earn.Code);
-                    IF AssignMatrix.FIND('-') THEN BEGIN
-                        Gratuity := AssignMatrix.Amount;
-                    END;
-                end;
 
+
+                AssignMatrix.RESET;
+                AssignMatrix.SETRANGE(AssignMatrix."Payroll Period", DateSpecified);
+                AssignMatrix.SETRANGE(Type, AssignMatrix.Type::Deduction);
+                AssignMatrix.SETRANGE(AssignMatrix."Employee No", Employee."No.");
+                AssignMatrix.SetRange(Code, 'GRATUITY');
+                IF AssignMatrix.FIND('-') THEN BEGIN
+                    Gratuity := AssignMatrix."Employer Amount";
+                END;
+                //   end;
+                TotalStaffCost := 0;
                 TotalDeductions := Tax20 + SalaryAdvance + Other;
                 NetPay := TaxableIncome - TotalDeductions;
                 BankTransfer := NetPay;
+                TotalStaffCost := GrossPay + SIF17 + Gratuity + MedicalInsurance;
             end;
         }
     }

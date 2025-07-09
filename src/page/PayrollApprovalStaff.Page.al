@@ -140,7 +140,6 @@ page 52275 "Payroll Approval-Staff"
                 PromotedCategory = Report;
                 PromotedIsBig = true;
                 ToolTip = 'Executes the Master Roll Report action';
-
                 trigger OnAction()
                 begin
                     Commit();
@@ -156,29 +155,7 @@ page 52275 "Payroll Approval-Staff"
                     end;
                 end;
             }
-            action("Monthly PAYE Report")
-            {
-                Image = Report;
-                Promoted = true;
-                PromotedCategory = Report;
-                PromotedIsBig = true;
-                ToolTip = 'Executes the Monthly PAYE Report action';
 
-                trigger OnAction()
-                begin
-                    Commit();
-
-                    EmpRec.Reset();
-                    EmpRec.SetFilter("Employee Type", '<>%1', EmpRec."Employee Type"::"Board Member");
-                    EmpRec.SetRange("Pay Period Filter", Rec."Payroll Period");
-                    if EmpRec.Find('-') then begin
-                        Clear(MonthlyPAYE);
-                        MonthlyPAYE.GetDefaults(Rec.Code);
-                        MonthlyPAYE.SetTableView(EmpRec);
-                        MonthlyPAYE.Run();
-                    end;
-                end;
-            }
             action("NSSF Report")
             {
                 Image = Report;
@@ -186,17 +163,18 @@ page 52275 "Payroll Approval-Staff"
                 PromotedCategory = Report;
                 PromotedIsBig = true;
                 ToolTip = 'Executes the NSSF Report action';
+                Caption = 'Net Pay Bank Transfer';
 
                 trigger OnAction()
                 begin
                     Commit();
 
-                    AssgnMatrix.Reset();
-                    AssgnMatrix.SetRange("Payroll Period", Rec."Payroll Period");
-                    if AssgnMatrix.Find('-') then begin
+                    EmpRec.Reset();
+                    EmpRec.SetRange("Pay Period Filter", Rec."Payroll Period");
+                    if EmpRec.Find('-') then begin
                         Clear(NSSFReport);
                         NSSFReport.GetDefaults(Rec.Code);
-                        NSSFReport.SetTableView(AssgnMatrix);
+                        NSSFReport.SetTableView(EmpRec);
                         NSSFReport.Run();
                     end;
                 end;
@@ -208,89 +186,23 @@ page 52275 "Payroll Approval-Staff"
                 PromotedCategory = Report;
                 PromotedIsBig = true;
                 ToolTip = 'Executes the NHIF Report action';
+                Caption = 'Cash payment Report';
 
                 trigger OnAction()
                 begin
                     Commit();
 
-                    AssgnMatrix.Reset();
-                    AssgnMatrix.SetRange("Payroll Period", Rec."Payroll Period");
-                    if AssgnMatrix.Find('-') then begin
+                    CashPayment.Reset();
+                    CashPayment.SetRange("Payroll Period", Rec."Payroll Period");
+                    if CashPayment.Find('-') then begin
                         Clear(NHIFReport);
                         NHIFReport.GetDefaults(Rec.Code);
-                        NHIFReport.SetTableView(AssgnMatrix);
+                        NHIFReport.SetTableView(CashPayment);
                         NHIFReport.Run();
                     end;
                 end;
             }
-            action("HELB Report")
-            {
-                Visible = false;
-                Image = Report;
-                Promoted = true;
-                PromotedCategory = Report;
-                PromotedIsBig = true;
-                ToolTip = 'Executes the HELB Report action';
 
-                trigger OnAction()
-                begin
-                    Commit();
-
-                    PayrollPeriodX.Reset();
-                    PayrollPeriodX.SetRange("Starting Date", Rec."Payroll Period");
-                    if PayrollPeriodX.Find('-') then begin
-                        Clear(HELBReport);
-                        HELBReport.GetDefaults(Rec.Code);
-                        HELBReport.SetTableView(PayrollPeriodX);
-                        HELBReport.Run();
-                    end;
-                end;
-            }
-            action("Pension Report")
-            {
-                Image = Report;
-                Promoted = true;
-                PromotedCategory = Report;
-                PromotedIsBig = true;
-                ToolTip = 'Executes the Pension Report action';
-
-                trigger OnAction()
-                begin
-                    Commit();
-
-                    AssgnMatrix.Reset();
-                    AssgnMatrix.SetRange("Payroll Period", Rec."Payroll Period");
-                    if AssgnMatrix.Find('-') then begin
-                        Clear(PensionReport);
-                        PensionReport.GetDefaults(Rec.Code);
-                        PensionReport.SetTableView(AssgnMatrix);
-                        PensionReport.Run();
-                    end;
-                end;
-            }
-            action("NITA Report")
-            {
-                Visible = false;
-                Image = Report;
-                Promoted = true;
-                PromotedCategory = Report;
-                PromotedIsBig = true;
-                ToolTip = 'Executes the NITA Report action';
-
-                trigger OnAction()
-                begin
-                    Commit();
-
-                    PayrollPeriodX.Reset();
-                    PayrollPeriodX.SetRange("Starting Date", Rec."Payroll Period");
-                    if PayrollPeriodX.Find('-') then begin
-                        Clear(NITAReport);
-                        NITAReport.GetDefaults(Rec.Code);
-                        NITAReport.SetTableView(PayrollPeriodX);
-                        NITAReport.Run();
-                    end;
-                end;
-            }
         }
     }
 
@@ -315,15 +227,19 @@ page 52275 "Payroll Approval-Staff"
     end;
 
     var
+        CashPayment: Record "Cash Payment";
         AssgnMatrix: Record "Assignment Matrix";
         EmpRec: Record Employee;
         PayrollPeriodX: Record "Payroll Period";
         HELBReport: Report HELB;
-        MasterRoll: Report "Master Roll Report";
+        MasterRoll: Report "Master Roll Report new";
         MonthlyPAYE: Report "Monthly PAYE Reportx";
-        NHIFReport: Report NHIF;
+        //Cash payment Report
+        NHIFReport: Report "Cash payment Report";
         NITAReport: Report NITA;
-        NSSFReport: Report "NSSF Reporting";
+        //Net Pay Bank Transfer (52064, 
+
+        NSSFReport: Report "Net Pay Bank Transfer";
         PensionReport: Report "Pension Report";
         ApprovalMgt: Codeunit "Approval Mgt HR Ext";
         CanCancelApprovalForRecord: Boolean;

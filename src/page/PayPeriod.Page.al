@@ -49,6 +49,10 @@ page 52228 "Pay Period"
                 {
                     ToolTip = 'Specifies the value of the Approval Status field.';
                 }
+                field("Bank Charges"; Rec."Bank Charges")
+                {
+                    ToolTip = 'The Tooltip property for PageField "Bank Charges" must be filled';
+                }
             }
         }
     }

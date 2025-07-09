@@ -7,7 +7,7 @@ page 52274 "Payroll Approval List-Staff"
     Editable = false;
     PageType = List;
     SourceTable = "Payroll Approval";
-    SourceTableView = where("Employee Type" = const(Staff));
+    //SourceTableView = where("Employee Type" = const(Staff));
 
     layout
     {

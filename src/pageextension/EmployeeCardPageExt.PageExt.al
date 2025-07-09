@@ -48,10 +48,76 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
         {
             Visible = false;
         }
+        modify("Alt. Address Code")
+        {
+            Visible = false;
+        }
+        modify("Alt. Address End Date")
+        {
+            Visible = false;
+        }
+        modify("Alt. Address Start Date")
+        {
+            Visible = false;
+        }
+
+        modify("Termination Date")
+        {
+            Visible = EmployerCodeVisible;
+        }
+        modify("Grounds for Term. Code")
+        {
+            Visible = false;
+
+        }
+        modify("Union Code")
+        {
+            Visible = false;
+        }
+        modify("Union Membership No.")
+        {
+            Visible = false;
+        }
+        modify("Statistics Group Code")
+        {
+            Visible = false;
+        }
+        modify("Resource No.")
+        {
+            Visible = EmployerCodeVisible;
+        }
+        modify("Salespers./Purch. Code")
+        {
+            Visible = false;
+        }
+        modify(Pager)
+        {
+            Visible = false;
+        }
+        modify(Extension)
+        {
+            Visible = false;
+        }
+        modify(Status)
+        {
+            trigger OnAfterValidate()
+            begin
+                EmployerCodeVisible := false;
+                if (Rec.Status = Rec.Status::Inactive) or (Rec.Status = Rec.Status::Terminated) then
+                    EmployerCodeVisible := true;
+                if Rec.Status = Rec.Status::Active then
+                    EmployerCodeVisible := false;
+            end;
+        }
+        modify("Inactive Date")
+        {
+            Visible = EmployerCodeVisible;
+        }
         modify("Cause of Inactivity Code")
         {
             Editable = Rec.Status = Rec.Status::Inactive;
-
+            //  Visible = Rec.Status = Rec.Status::Inactive;
+            Visible = EmployerCodeVisible;
             trigger OnAfterValidate()
             var
                 InactivityRec: Record "Cause of Inactivity";
@@ -60,6 +126,7 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
                     InactiveDescription := InactivityRec.Description;
             end;
         }
+
         addafter("Last Name")
         {
             field("Other Name"; Rec."Other Name")
@@ -75,6 +142,7 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
                 ApplicationArea = All;
                 Caption = 'Cause of Inactivity Description';
                 Editable = false;
+                Visible = EmployerCodeVisible;
             }
         }
 
@@ -160,6 +228,7 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
             {
                 ToolTip = 'Specifies the value of the ID No. field';
                 ApplicationArea = All;
+                Caption = 'Staff ID No';
             }
             field("Personal Email"; Rec."Personal Email")
             {
@@ -201,6 +270,7 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
             {
                 ToolTip = 'Specifies the value of the Home District field';
                 ApplicationArea = All;
+                Caption = 'country of Origin';
             }
             field("First Language"; Rec."First Language")
             {
@@ -248,6 +318,7 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Secondary Job Position field.';
+                    Visible = false;
                 }
                 field("Secondary Job Position Title"; Rec."Secondary Job Position Title")
                 {
@@ -281,6 +352,7 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
                     {
                         ToolTip = 'Specifies the value of the Contract Number field';
                         ApplicationArea = All;
+                        Visible = false;
                     }
                     field("Contract Length"; Rec."Contract Length")
                     {
@@ -681,23 +753,27 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Last Increment Date field.';
+                    Visible = false;
                 }
                 field("Next Increment Date"; Rec."Next Increment Date")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Next Increment Date field.';
+                    Visible = false;
                 }
                 field("Last Date Increment"; Rec."Last Date Increment")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Last Date Increment field.';
                     Caption = 'Last Increment Date Details';
+                    Visible = false;
                 }
                 field("Next Date Increment"; Rec."Next Date Increment")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Next Date Increment field.';
                     Caption = 'Next Increment Date Details';
+                    Visible = false;
                 }
             }
         }
@@ -1207,6 +1283,12 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
 
         SetContractView();
         DisabilityView := false;
+        EmployerCodeVisible := false;
+        if (Rec.Status = Rec.Status::Inactive) or (Rec.Status = Rec.Status::Terminated) then
+            EmployerCodeVisible := true;
+        if Rec.Status = Rec.Status::Active then
+            EmployerCodeVisible := false;
+
     end;
 
     trigger OnModifyRecord(): Boolean
@@ -1222,12 +1304,18 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
 
         // // If everything is okay, allow the modification
         // exit(true);
+        EmployerCodeVisible := false;
+        if (Rec.Status = Rec.Status::Inactive) or (Rec.Status = Rec.Status::Terminated) then
+            EmployerCodeVisible := true;
+        if Rec.Status = Rec.Status::Active then
+            EmployerCodeVisible := false;
     end;
 
 
     trigger OnAfterGetRecord()
     var
         Inactive: Boolean;
+
     begin
         PayPeriod.Reset();
         PayPeriod.SetRange(PayPeriod."Close Pay", false);
@@ -1242,6 +1330,13 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
             Inactive := true
         else
             Inactive := false;
+
+        EmployerCodeVisible := false;
+        if (Rec.Status = Rec.Status::Inactive) or (Rec.Status = Rec.Status::Terminated) then
+            EmployerCodeVisible := true;
+        if Rec.Status = Rec.Status::Active then
+            EmployerCodeVisible := false;
+
     end;
 
     trigger OnAfterGetCurrRecord()
@@ -1286,6 +1381,7 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
         Text0001: Label 'Do you want to send the payslip?';
         InactiveDescription: Text;
         ApprovalMgt: Codeunit "Approval Mgt HR Ext";
+        EmployerCodeVisible: Boolean;
 
 
     local procedure ContractFields()

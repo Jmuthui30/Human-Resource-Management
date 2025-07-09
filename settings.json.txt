@@ -1,0 +1,37 @@
+{
+    "workbench.startupEditor": "none",
+    "al.assemblyProbingPaths": [
+        "./.netpackages",
+        "C:/Windows/assembly/",
+        "C:/Program Files/Microsoft Dynamics 365 Business Central/230/Service/Add-ins",
+        "C:/Program Files/Microsoft Dynamics 365 Business Central/230/Service",
+        "./.netpackages",
+        "C:\\Program Files\\Microsoft Dynamics 365 Business Central\\230\\Service\\Add-ins",
+        "C:\\Program Files\\Microsoft Dynamics 365 Business Central\\230\\Service",
+        "C:\\Windows\\assembly",
+        "C:\\Windows\\assembly\\GAC_MSIL\\Microsoft.Office.Interop.Excel\\15.0.0.0__71e9bce111e9429c"
+    ],
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "liveSassCompile.settings.formats": [
+        {
+            "format": "expanded",
+            "extensionName": ".css",
+            "savePath":"static/css/" ,
+            "savePathReplacementPairs": null
+        }
+    ],
+    "liveSassCompile.settings.generateMap": false,
+    "liveSassCompile.settings.useNewCompiler": false,
+    "liveSassCompile.settings.autoprefix": [
+
+    ],
+    "github.copilot.editor.enableAutoCompletions": true,
+    "files.autoSave": "afterDelay",
+    "json.schemas": [
+        
+    ],
+    "explorer.confirmDelete": false
+}
+

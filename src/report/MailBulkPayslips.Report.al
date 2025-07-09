@@ -121,7 +121,7 @@ report 52054 "Mail Bulk Payslips"
         CompanyInfo: Record "Company Information";
         EmpRec: Record Employee;
         HRSetup: Record "Human Resources Setup";
-        Payslip: Report "New Payslipx";
+        Payslip: Report "Payslipx New";
         Base64Conv: Codeunit "Base64 Convert";
         Email: Codeunit Email;
         EmailMessage: Codeunit "Email Message";

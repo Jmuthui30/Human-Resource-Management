@@ -155,7 +155,7 @@ page 52108 "Payroll Role Centre"
             group("Payroll Approval")
             {
                 Caption = 'Payroll Approval';
-                Visible = false;
+                //  Visible = false;
                 action("Payroll Approval-Staff")
                 {
                     Image = List;
@@ -163,8 +163,8 @@ page 52108 "Payroll Role Centre"
                     ApplicationArea = All;
                     ToolTip = 'Executes the Payroll Approval-Staff action';
                     Caption = 'Payroll Approval';
-                    RunPageLink = Status = const(Open);
-                    Visible = false;
+                    RunPageLink = Status = filter(Created | open);
+                    //Visible = false;
                 }
                 action("Payroll Approval-Pending")
                 {
@@ -174,7 +174,7 @@ page 52108 "Payroll Role Centre"
                     ToolTip = 'Executes the Payroll Approval-Staff action';
                     Caption = 'Payroll Approval - Pending Approval';
                     RunPageLink = Status = const("Pending Approval");
-                    Visible = false;
+                    //  Visible = false;
                 }
                 action("Payroll Approval-Approved")
                 {
@@ -184,7 +184,7 @@ page 52108 "Payroll Role Centre"
                     ToolTip = 'Executes the Payroll Approval-Staff action';
                     Caption = 'Payroll Approval - Approved';
                     RunPageLink = Status = const(Approved);
-                    Visible = false;
+                    // Visible = false;
                 }
                 action("Payroll Approval- Board")
                 {
@@ -193,7 +193,7 @@ page 52108 "Payroll Role Centre"
                     ApplicationArea = All;
                     ToolTip = 'Executes the Payroll Approval- Board action';
                     Caption = 'Payroll Approval- Board';
-                    Visible = false;
+                    //Visible = false;
                 }
             }
             group("Allowance Register")
@@ -379,6 +379,7 @@ page 52108 "Payroll Role Centre"
                         ApplicationArea = All;
                         ToolTip = 'Executes the Master Roll Report action';
                         Caption = 'Master Roll Report';
+                        Visible = false;
                     }
 
                     action("Master Roll Reports New")
@@ -386,7 +387,7 @@ page 52108 "Payroll Role Centre"
                         RunObject = report "Master Roll Report new";
                         ApplicationArea = All;
                         ToolTip = 'Executes the Master Roll Report action';
-                        Caption = 'Master Roll Report New';
+                        Caption = 'Master Roll Report';
                     }
                     action("New Payslips ")
                     {
@@ -427,6 +428,15 @@ page 52108 "Payroll Role Centre"
                         ApplicationArea = All;
                         ToolTip = 'Executes the Net Pay Report action';
                         Caption = 'Net Pay Cash Report';
+                        Visible = false;
+                    }
+                    action("Pay cash Report")
+                    {
+                        Image = "Report";
+                        RunObject = report "Cash payment Report";
+                        ApplicationArea = All;
+                        ToolTip = 'Executes the Net Pay Report action';
+                        Caption = 'Net Pay Cash Payment';
                     }
                     action("Employee Pay Modes Summary")
                     {

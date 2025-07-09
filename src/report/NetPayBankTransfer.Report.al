@@ -131,12 +131,52 @@ report 52064 "Net Pay Bank Transfer"
             column(Certified_correct_by_Company_Authorised_Officer_Caption; Certified_correct_by_Company_Authorised_Officer_CaptionLbl)
             {
             }
+            column(BankCharges; BankCharges)
+            { }
+            column(Pay_Mode; "Pay Mode") { }
+            column(PreparedBy; GetUserName(Approver[1]))
+            {
+            }
+            column(DatePrepared; ApproverDate[1])
+            {
+            }
+            column(PreparedBy_Signature; UserSetup.Signature)
+            {
+            }
+            column(ExaminedBy; GetUserName(Approver[2]))
+            {
+            }
+            column(DateApproved; ApproverDate[2])
+            {
+            }
+            column(ExaminedBy_Signature; UserSetup1.Signature)
+            {
+            }
+            column(VBC; GetUserName(Approver[3]))
+            {
+            }
+            column(VBCDate; ApproverDate[3])
+            {
+            }
+            column(VBC_Signature; UserSetup2.Signature)
+            {
+            }
+            column(Authorizer; GetUserName(Approver[4]))
+            {
+            }
+            column(DateAuthorized; ApproverDate[4])
+            {
+            }
+            column(Authorizer_Signature; UserSetup3.Signature)
+            {
+            }
 
             // "No.", Status;
             trigger OnAfterGetRecord()
             begin
                 BankName := '';
                 BankBranch := '';
+                BankCharges := 0;
 
                 if EmpBank.Get(Employee."Employee's Bank") then;
                 BankName := EmpBank.Name;
@@ -145,6 +185,12 @@ report 52064 "Net Pay Bank Transfer"
                 BankBranch := EmpBankBranch."Branch Name";
 
 
+                if "Pay Mode" = 'BANK_INTERNAL' then begin
+                    PayrollPeriod.Reset();
+                    PayrollPeriod.SetRange("Starting Date", DateSpecified);
+                    if PayrollPeriod.Find('-') then
+                        BankCharges := PayrollPeriod."Bank Charges";
+                end;
 
                 Employee.CalcFields(Employee."Total Allowances", Employee."Total Deductions", "Loan Interest");
                 if (Employee."Total Allowances" + Employee."Total Deductions" + Employee."Loan Interest") = 0 then
@@ -158,15 +204,47 @@ report 52064 "Net Pay Bank Transfer"
                 if cashPayment.FindFirst() then begin
                     CashAmountNetPay := cashPayment."Cash Amount";
                 end;
-                Message('cash is %1', CashAmountNetPay);
+                //   Message('cash is %1', CashAmountNetPay);
 
-                // Standard Net Pay Calculation: (Allowances) - (Deductions + Loan Interest)
-                Message('allo is %1..#.dec is %2', Employee."Total Allowances", Employee."Total Deductions");
-                NetPay := (Employee."Total Allowances" + Employee."Total Deductions" + Employee."Loan Interest") - (CashAmountNetPay);
+                //  // Standard Net Pay Calculation: (Allowances) - (Deductions + Loan Interest)
+                //  Message('allo is %1..#.dec is %2', Employee."Total Allowances", Employee."Total Deductions");
+                NetPay := (Employee."Total Allowances" + Employee."Total Deductions" + Employee."Loan Interest" + BankCharges) - (CashAmountNetPay);
                 NetPay := Round(NetPay, RoundPrecision, RoundDirection);
 
                 // NetPay := Round(Employee."Total Allowances" + Employee."Total Deductions" + Employee."Loan Interest", RoundPrecision, RoundDirection);
 
+                ApprovalEntries.Reset();
+                ApprovalEntries.SetRange("Table ID", Database::"Payroll Approval");
+                if PayApprovalCode <> '' then
+                    ApprovalEntries.SetRange("Document No.", PayApprovalCode)
+                else
+                    ApprovalEntries.SetRange("Document No.", Payroll.GetPayrollApprovalCode(DateSpecified));
+                ApprovalEntries.SetRange(Status, ApprovalEntries.Status::Approved);
+                if ApprovalEntries.Find('-') then
+                    repeat
+                        if ApprovalEntries."Sequence No." = 1 then begin
+                            Approver[1] := ApprovalEntries."Sender ID";
+                            ApproverDate[1] := ApprovalEntries."Date-Time Sent for Approval";
+                            if UserSetup.Get(Approver[1]) then
+                                UserSetup.CalcFields(Signature);
+                            Approver[2] := ApprovalEntries."Last Modified By User ID";
+                            ApproverDate[2] := ApprovalEntries."Last Date-Time Modified";
+                            if UserSetup1.Get(Approver[2]) then
+                                UserSetup1.CalcFields(Signature);
+                        end;
+                        if ApprovalEntries."Sequence No." = 2 then begin
+                            Approver[3] := ApprovalEntries."Last Modified By User ID";
+                            ApproverDate[3] := ApprovalEntries."Last Date-Time Modified";
+                            if UserSetup2.Get(Approver[3]) then
+                                UserSetup2.CalcFields(Signature);
+                        end;
+                        if ApprovalEntries."Sequence No." = 3 then begin
+                            Approver[4] := ApprovalEntries."Last Modified By User ID";
+                            ApproverDate[4] := ApprovalEntries."Last Date-Time Modified";
+                            if UserSetup3.Get(Approver[4]) then
+                                UserSetup3.CalcFields(Signature);
+                        end;
+                    until ApprovalEntries.Next() = 0;
 
             end;
 
@@ -222,6 +300,18 @@ report 52064 "Net Pay Bank Transfer"
     end;
 
     var
+        UserSetup: Record "User Setup";
+        UserSetup1: Record "User Setup";
+        UserSetup2: Record "User Setup";
+        UserSetup3: Record "User Setup";
+        Earncode: array[1000] of Code[20];
+        Approver: array[10] of Code[50];
+        PayApprovalCode: Code[50];
+        ApproverDate: array[10] of DateTime;
+        Allowances: array[1000] of Decimal;
+        Deductions: array[100] of Decimal;
+        ApprovalEntries: Record "Approval Entry";
+        BankCharges: Decimal;
         CashAmountNetPay: Decimal;
         EmployeePayModes: Record "Employee Pay Modes";
         cashPayment: Record "Cash Payment";
@@ -253,11 +343,28 @@ report 52064 "Net Pay Bank Transfer"
         RoundDirection: Text;
         BankBranch: Text[100];
         BankName: Text[100];
+        PayrollPeriod: Record "Payroll Period";
 
     procedure GetSortCode(No: Code[50]): Code[50]
     begin
         if Employee.Get(No) then
             exit(Employee."Employee Bank Sort Code");
+    end;
+
+    procedure GetDefaults(var PayAppCode: Code[50])
+    begin
+        PayApprovalCode := PayAppCode;
+    end;
+
+    local procedure GetUserName(UserCode: Code[50]): Text
+    var
+        users: Record User;
+    begin
+        Users.RESET;
+        Users.SETRANGE("User Name", UserCode);
+        IF Users.FINDFIRST THEN
+            EXIT(Users."Full Name");
+        exit(UserCode);
     end;
 }
 

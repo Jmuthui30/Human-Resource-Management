@@ -390,6 +390,25 @@ report 52198 "Master Roll Report new"
                         end;
                     until ApprovalEntries.Next() = 0;
 
+
+                //Get sender ID even before approval sent
+                // Approver[1] := "Created By";
+                // ApproverDate[1] := CreateDateTime(Payments.Date, Payments."Time Inserted");
+                // if UserSetup.Get(Approver[1]) then
+                //     UserSetup.CalcFields(Signature);
+
+                // ApprovalEntries.Reset();
+                // ApprovalEntries.SetCurrentKey("Sequence No.");
+                // ApprovalEntries.SetRange("Table ID", Database::Payments);
+                // ApprovalEntries.SetRange("Document No.", Payments."No.");
+                // ApprovalEntries.SetRange(Status, ApprovalEntries.Status::Approved);
+                // if ApprovalEntries.Find('-') then
+                //     repeat
+
+                //     until ApprovalEntries.Next() = 0;
+
+
+
             end;
 
             trigger OnPreDataItem()

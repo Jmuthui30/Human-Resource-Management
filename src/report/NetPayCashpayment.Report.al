@@ -222,12 +222,12 @@ report 52964 "Net Pay Cash Payment"
     end;
 
     var
+        CompanyInfo: Record "Company Information";
         CashAmountNetPay: Decimal;
         EmployeePayModes: Record "Employee Pay Modes";
         cashPayment: Record "Cash Payment";
         EmpBankBranch: Record "Bank Branches";
         EmpBank: Record Banks;
-        CompanyInfo: Record "Company Information";
         HRSetup: Record "Human Resources Setup";
         Payroll: Codeunit Payroll;
         DateSpecified: Date;

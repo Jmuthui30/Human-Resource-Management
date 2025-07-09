@@ -287,7 +287,12 @@ pageextension 52002 "HRSetupPageExt" extends "Human Resources Setup"
             group(Payroll)
             {
                 Caption = 'Payroll';
+                field("Bank Charges Account"; Rec."Bank Charges Account")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the General Payslip Message field';
 
+                }
                 field("General Payslip Message"; Rec."General Payslip Message")
                 {
                     ApplicationArea = All;

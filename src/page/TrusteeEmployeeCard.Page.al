@@ -55,12 +55,14 @@ page 52178 "Trustee Employee Card"
                     ApplicationArea = BasicHR;
                     Caption = 'Company Phone No.';
                     ToolTip = 'Specifies the employee''s telephone number.';
+                    Visible = FALSE;
                 }
                 field("Company E-Mail"; Rec."Company E-Mail")
                 {
                     ApplicationArea = BasicHR;
                     ExtendedDatatype = EMail;
                     ToolTip = 'Specifies the employee''s email address at the company.';
+                    Visible = FALSE;
                 }
                 field("Last Date Modified"; Rec."Last Date Modified")
                 {
@@ -77,22 +79,27 @@ page 52178 "Trustee Employee Card"
                 field("User ID"; Rec."User ID")
                 {
                     ToolTip = 'Specifies the value of the User ID field';
+                    Visible = FALSE;
                 }
                 field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
                 {
                     ToolTip = 'Specifies the value of the Global Dimension 1 Code field';
+                    Visible = FALSE;
                 }
                 field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
                 {
                     ToolTip = 'Specifies the value of the Global Dimension 2 Code field';
+                    Visible = FALSE;
                 }
                 field("BOSA Member No."; Rec."Customer No.")
                 {
                     ToolTip = 'Specifies the value of the BOSA Member No. field.';
+                    Visible = FALSE;
                 }
                 field("FOSA Account No."; Rec."Vendor No.")
                 {
                     ToolTip = 'Specifies the value of the FOSA Account No. field.';
+                    Visible = FALSE;
                 }
             }
             group("Personal Details")
@@ -173,6 +180,7 @@ page 52178 "Trustee Employee Card"
                 field("Home District"; Rec."Home District")
                 {
                     ToolTip = 'Specifies the value of the Home District field';
+                    Caption = 'Country of Origin';
                 }
                 field("First Language"; Rec."First Language")
                 {
@@ -269,9 +277,11 @@ page 52178 "Trustee Employee Card"
                     field(Pager; Rec.Pager)
                     {
                         ToolTip = 'Specifies the employee''s pager number.';
+                        Visible = FALSE;
                     }
                     field(Extension; Rec.Extension)
                     {
+                        Visible = FALSE;
                         ApplicationArea = BasicHR;
                         Importance = Promoted;
                         ToolTip = 'Specifies the employee''s telephone extension.';
@@ -281,6 +291,7 @@ page 52178 "Trustee Employee Card"
                         Caption = 'Direct Phone No.';
                         Importance = Promoted;
                         ToolTip = 'Specifies the employee''s telephone number.';
+                        Visible = FALSE;
                     }
                     field("E-Mail"; Rec."E-Mail")
                     {
@@ -291,14 +302,17 @@ page 52178 "Trustee Employee Card"
                     }
                     field("Alt. Address Code"; Rec."Alt. Address Code")
                     {
+                        Visible = FALSE;
                         ToolTip = 'Specifies a code for an alternate address.';
                     }
                     field("Alt. Address Start Date"; Rec."Alt. Address Start Date")
                     {
+                        Visible = FALSE;
                         ToolTip = 'Specifies the starting date when the alternate address is valid.';
                     }
                     field("Alt. Address End Date"; Rec."Alt. Address End Date")
                     {
+                        Visible = FALSE;
                         ToolTip = 'Specifies the last day when the alternate address is valid.';
                     }
                 }
@@ -437,24 +451,29 @@ page 52178 "Trustee Employee Card"
                 {
                     ApplicationArea = BasicHR;
                     ToolTip = 'Specifies the bank account''s international bank account number.';
+                    Visible = FALSE;
                 }
                 field("SWIFT Code"; Rec."SWIFT Code")
                 {
+                    Visible = FALSE;
                     ApplicationArea = BasicHR;
                     ToolTip = 'Specifies the SWIFT code (international bank identifier code) of the bank where the employee has the account.';
                 }
                 field("PIN Number"; Rec."PIN Number")
                 {
+                    Visible = FALSE;
                     ShowMandatory = true;
                     ToolTip = 'Specifies the value of the PIN Number field';
                 }
                 field("NHIF No."; Rec."NHIF No")
                 {
+                    Visible = FALSE;
                     Caption = 'NHIF No.';
                     ToolTip = 'Specifies the value of the NHIF No. field';
                 }
                 field("NSSF No."; Rec."Social Security No.")
                 {
+                    Visible = FALSE;
                     ToolTip = 'Specifies the value of the Social Security No. field';
                 }
                 field("Pay Mode"; Rec."Pay Mode")
@@ -512,21 +531,25 @@ page 52178 "Trustee Employee Card"
                 }
                 field("Salary Scale"; Rec."Salary Scale")
                 {
+                    Visible = FALSE;
                     ToolTip = 'Specifies the value of the Salary Scale field';
                 }
                 field(Present; Rec."Present Pointer")
                 {
+                    Visible = FALSE;
                     Caption = 'Present Pointer';
                     ToolTip = 'Specifies the value of the Present Pointer field';
                 }
                 field(Previous; Rec.Previous)
                 {
+                    Visible = FALSE;
                     Caption = 'Previous Pointer';
                     Editable = false;
                     ToolTip = 'Specifies the value of the Previous Pointer field';
                 }
                 field(Halt; Rec.Halt)
                 {
+                    Visible = FALSE;
                     Caption = 'Halt Pointer';
                     Editable = false;
                     ToolTip = 'Specifies the value of the Halt Pointer field';
@@ -537,14 +560,17 @@ page 52178 "Trustee Employee Card"
                 }
                 field("Pays tax?"; Rec."Pays tax?")
                 {
+                    Visible = FALSE;
                     ToolTip = 'Specifies the value of the Pays tax? field';
                 }
                 field("Secondary Employee"; Rec."Secondary Employee")
                 {
+                    Visible = FALSE;
                     ToolTip = 'Specifies the value of the Secondary Employee field';
                 }
                 field("Insurance Relief"; Rec."Insurance Relief")
                 {
+                    Visible = FALSE;
                     ToolTip = 'Specifies the value of the Insurance Relief field';
                 }
                 field("Pro-Rata Calculated"; Rec."Pro-Rata Calculated")

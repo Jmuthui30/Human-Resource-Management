@@ -826,5 +826,9 @@ permissionset 52000 HRPermissions
         report "Payslipx New" = X,
         page "Payroll Project Allocation" = X,
         tabledata "Cash Payment" = RIMD,
-        table "Cash Payment" = X;
+        table "Cash Payment" = X,
+        tabledata Region = RIMD,
+        table Region = X,
+        report "Net Pay Cash Payment" = X,
+        page "Cash Payment" = X;
 }

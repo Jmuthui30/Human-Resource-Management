@@ -12,18 +12,21 @@ report 52045 "Transfer to Journal"
             begin
                 /*if Employees."Posting Group"<>EmpGroup then
                 CurrReport.Skip();*/
+                HRSetup.Get();
                 Employees.TestField("Posting Group");
 
                 TotalDebits := 0;
                 TotalCredits := 0;
                 TotalInterest := 0;
+                BankCharges := 0;
 
                 PayrollPeriod.Reset();
                 PayrollPeriod.SetRange("Starting Date", Datefilter);
                 if PayrollPeriod.Find('-') then
                     //PayrollPeriod.TESTFIELD("Pay Date");
                     Payday := PayrollPeriod."Starting Date";
-
+                BankCharges := PayrollPeriod."Bank Charges";
+                //  Message('bank is %1', BankCharges);
                 Earn.Reset();
                 Earn.SetRange("Reduces Tax", false);
                 Earn.SetFilter("Account No.", '<>%1', '');
@@ -60,7 +63,10 @@ report 52045 "Transfer to Journal"
                                     GenJnline.Validate("Shortcut Dimension 2 Code");
                                     // GenJnline."Currency Code" := Employees."Currency Code";
                                     GenJnline.Validate("Currency Code");
-                                    GenJnline.Amount := (AssignMatrix.Amount);
+                                    if Employees."Pay Mode" = 'BANK_INTERNAL' then
+                                        GenJnline.Amount := (AssignMatrix.Amount + BankCharges)
+                                    else
+                                        GenJnline.Amount := (AssignMatrix.Amount);
                                     GenJnline.Validate(Amount);
                                     GenJnline."Employee Code" := AssignMatrix."Employee No";
                                     TotalDebits := TotalDebits + AssignMatrix.Amount;
@@ -73,7 +79,40 @@ report 52045 "Transfer to Journal"
                                 end;
                             end;
                         end;
+                        //*****************************************************bank Charge
+                        if Employees."Pay Mode" = 'BANK_INTERNAL' then begin
+                            GenJnline.Init();
+                            LineNumber := LineNumber + 10;
+                            //GenJnline."Journal Template Name":='GENERAL';
+                            GenJnline."Journal Template Name" := HRSetup."Payroll Journal Template";
+                            GenJnline."Journal Batch Name" := JName;
+                            GenJnline."Line No." := GenJnline."Line No." + 10000;
+                            GenJnline."Account Type" := GenJnline."Account Type"::"G/L Account";
+                            Earn.TestField("Account No.");
+                            GenJnline."Account No." := HRSetup."Bank Charges Account";
+                            //GenJnline.VALIDATE("Account No.");
+                            GenJnline."Posting Date" := Payday;
+                            GenJnline.Description := 'Bank Charge' + Format(Datefilter, 0, '<month text> <year4>') + ' ' + Employees."No." + '-' + Employees."First Name";
+                            GenJnline."Shortcut Dimension 1 Code" := Employees."Global Dimension 1 Code";
+                            GenJnline."Shortcut Dimension 2 Code" := Employees."Global Dimension 2 Code";
+                            //  GenJnline."Currency Code" := Employees."Currency Code";
+                            GenJnline.Validate("Currency Code");
+                            GenJnline."Document No." := Noseries;
+                            GenJnline.Amount := -BankCharges;
+                            GenJnline.Validate(Amount);
+                            GenJnline.Validate("Shortcut Dimension 1 Code");
+                            GenJnline.Validate("Shortcut Dimension 2 Code");
+                            GenJnline."Employee Code" := AssignMatrix."Employee No";
+                            TotalDebits := TotalDebits + AssignMatrix.Amount;
+                            GenJnline."Gen. Bus. Posting Group" := '';
+                            GenJnline."Gen. Prod. Posting Group" := '';
+                            GenJnline."VAT Bus. Posting Group" := '';
+                            GenJnline."Emp Payroll Period" := Payday;
+                            if GenJnline.Amount <> 0 then
+                                GenJnline.Insert();
+                        end;
 
+                        //**********************************************************************Bank charges
                         if Earn."Basic Salary Code" = false then begin
                             AssignMatrix.Reset();
                             AssignMatrix.SetRange(AssignMatrix.Type, AssignMatrix.Type::Earning);
@@ -388,7 +427,7 @@ report 52045 "Transfer to Journal"
                             if AssignMatrix."Employer Amount" <> 0 then
                                 TotalDeduAmount := TotalDeduAmount + AssignMatrix."Employer Amount";
                     until Ded.Next() = 0;
-                Message('   TotalDeduAmount%1 ', TotalDeduAmount);
+                //        Message('   TotalDeduAmount%1 ', TotalDeduAmount);
                 PostingGroup.Reset();
                 PostingGroup.SetRange(PostingGroup.Code, Employees."Posting Group");
                 if PostingGroup.Find('-') then begin
@@ -554,6 +593,7 @@ report 52045 "Transfer to Journal"
         LineNumber: Integer;
         JName: Text[10];
         MonDate: Text[10];
+        BankCharges: Decimal;
 
     procedure AdjustPostingGr()
     begin

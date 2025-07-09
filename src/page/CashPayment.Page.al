@@ -31,6 +31,10 @@ page 52993 "Cash Payment"
                     ToolTip = 'The Tooltip property for PageField "Cash Amount" must be filled.';
 
                 }
+                field(Location; Rec.Location)
+                {
+                    ToolTip = 'The Tooltip property for PageField Location must be filled';
+                }
                 field(Status; Rec.Status)
                 {
                     ToolTip = 'The Tooltip property for PageField Status must be filled.';

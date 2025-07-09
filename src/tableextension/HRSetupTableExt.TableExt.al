@@ -503,6 +503,11 @@ tableextension 52002 "HRSetupTableExt" extends "Human Resources Setup"
             DataClassification = SystemMetadata;
             TableRelation = "No. Series".Code;
         }
+        field(52092; "Bank Charges Account"; Code[20])
+        {
+            DataClassification = SystemMetadata;
+            TableRelation = "G/L Account"."No.";
+        }
     }
 }
 

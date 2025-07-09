@@ -44,6 +44,12 @@ table 52926 "Cash Payment"
             DataClassification = ToBeClassified;
             OptionMembers = ,Open,Close;
         }
+        field(11; "Location"; Code[2000])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Region.Code;
+
+        }
 
     }
 

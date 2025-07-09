@@ -106,6 +106,10 @@ table 52118 "Payroll Period"
             Caption = 'Approval Status';
             Editable = false;
         }
+        field(50012; "Bank Charges"; Decimal)
+        {
+
+        }
     }
 
     keys
