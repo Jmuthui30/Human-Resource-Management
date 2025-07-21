@@ -2482,6 +2482,37 @@ codeunit 52001 "HR Management"
         end;
     end;
 
+    procedure NotifyLeaveApplicantOnApproved(Leave: Record "Leave Application")
+    var
+        CompanyInfo: Record "Company Information";
+        Employee: Record Employee;
+        Email: Codeunit Email;
+        EmailMessage: Codeunit "Email Message";
+        RecallMsg: Label '<p style="font-family:Verdana,Arial;font-size:10pt">Dear %1,<br><br></p><p style="font-family:Verdana,Arial;font-size:10pt"> This is to inform you that your Card that was to run from <Strong>%2</Strong> to <Strong>%3</Strong> has been Approved. <br>Please refer to the comments by your approver and Post. <br>  <br><br> Thank you for your cooperation.<br><br>Kind regards,<br>COALITION FOR HUMANITY<br><Strong>%4<Strong></p>', Comment = '%1 = Employee Name, %2 = Start Date, %3 = End Date, %4 = Company Name';
+        Receipient: List of [Text];
+        FormattedBody: Text;
+        Subject: Text;
+        TimeNow: Text;
+    begin
+        Employee.Reset();
+        if Employee.Get(Leave."Employee No") then begin
+            Employee.TestField("E-Mail");
+            Clear(Receipient);
+            CompanyInfo.Get();
+            CompanyInfo.TestField(Name);
+            Receipient.Add(Employee."E-Mail");
+            Subject := 'Leave Recall';
+            TimeNow := Format(Time);
+            FormattedBody := StrSubstNo(RecallMsg, (Employee."First Name" + ' ' + Employee."Last Name"),
+                                        Format(Leave."Start Date", 0, '<Weekday Text> <Day> <Month Text> <Year4>'),
+                                          Format(Leave."End Date", 0, '<Weekday Text> <Day> <Month Text> <Year4>'),
+                                           CompanyInfo.Name);
+            EmailMessage.Create(Receipient, Subject, FormattedBody, true);
+            Email.Send(EmailMessage);
+        end;
+    end;
+
+
     procedure CheckIfLeaveRelieversExist(Leave: Record "Leave Application")
     var
         LeaveRelievers: Record "Leave Relievers";
@@ -2491,6 +2522,18 @@ codeunit 52001 "HR Management"
         LeaveRelievers.SetRange("Leave Code", Leave."Application No");
         if LeaveRelievers.IsEmpty() then
             Error(LeaveReliverErr);
+    end;
+
+
+    procedure CheckDocumentAttachmentExist(Leave: Record "Leave Application")
+    var
+        DocumentAttachment: Record "Document Attachment";
+        DocumentAttachmentErr: Label 'Please attach handover notes or any other leave related documents ';
+    begin
+        DocumentAttachment.Reset();
+        DocumentAttachment.SetRange(DocumentAttachment."No.", Leave."Application No");
+        if DocumentAttachment.IsEmpty() then
+            Error(DocumentAttachmentErr);
     end;
 
     procedure CompleteInterview(JobApplication: Record "Job Application")

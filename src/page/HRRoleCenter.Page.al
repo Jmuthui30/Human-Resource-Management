@@ -473,10 +473,16 @@ page 52121 "HR Role Center"
                 }
                 action("Board of Director ")
                 {
-                    Visible = false;
+                    //Visible = false;
                     RunObject = page "Board of Directors";
                     ToolTip = 'Executes the Board of Director  action';
                     Caption = 'Board of Director ';
+                }
+                action("CH Company Inform")
+                {
+                    RunObject = page "CH Company Inform";
+                    ToolTip = 'Executes the Company Information list action';
+                    Caption = 'Company Information list';
                 }
             }
             group(ContractsMGT)
@@ -680,6 +686,12 @@ page 52121 "HR Role Center"
                             Image = "Report";
                             RunObject = report "Staff Absence";
                             Caption = 'Staff Absences';
+                        }
+                        action("Employment Contracts")
+                        {
+                            Image = "Report";
+                            RunObject = report "Employment Contracts";
+                            Caption = 'Employment Contracts';
                         }
 
                     }

@@ -830,5 +830,10 @@ permissionset 52000 HRPermissions
         tabledata Region = RIMD,
         table Region = X,
         report "Net Pay Cash Payment" = X,
-        page "Cash Payment" = X;
+        page "Cash Payment" = X,
+        tabledata "CH Company information" = RIMD,
+        table "CH Company information" = X,
+        report "Cash payment Report" = X,
+        page "CH Company Inform" = X,
+        page Region = X;
 }

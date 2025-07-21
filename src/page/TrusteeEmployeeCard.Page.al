@@ -1,7 +1,7 @@
 page 52178 "Trustee Employee Card"
 {
     ApplicationArea = All;
-    Caption = 'Employee Card';
+    Caption = 'Board Member Card';
     PageType = Card;
     SourceTable = Employee;
 
@@ -319,22 +319,36 @@ page 52178 "Trustee Employee Card"
             }
             group("Employment Information")
             {
-                Caption = 'Employment Information';
+                Caption = 'Board Member Information';
 
                 field("Job Position"; Rec."Job Position")
                 {
                     ToolTip = 'Specifies the value of the Job Position field';
+                    Caption = 'Board Position';
                 }
                 field("Job Title"; Rec."Job Title")
                 {
                     Editable = false;
+                    Caption = 'Board Title';
                     ToolTip = 'Specifies the value of the Job Title field';
+                }
+                field("Period"; Rec."Contract Length")
+                {
+                    ToolTip = 'Specifies the value of the Contract Length field';
+                }
+                field("Start_Date"; Rec."Contract Start Date")
+                {
+                    ToolTip = 'Specifies the value of the Contract Start Date field';
+                }
+                field("End_Date"; Rec."Contract End Date")
+                {
+                    ToolTip = 'Specifies the value of the Contract End Date field';
                 }
                 field("Employment Type"; Rec."Employment Type")
                 {
                     Caption = 'Employment Type';
                     ToolTip = 'Specifies the value of the Employment Type field';
-
+                    Visible = false;
                     trigger OnValidate()
                     begin
                         SetContractView();
@@ -371,12 +385,14 @@ page 52178 "Trustee Employee Card"
                 field("Employment Date"; Rec."Employment Date")
                 {
                     ToolTip = 'Specifies the value of the Employment Date field';
+                    Visible = false;
                 }
             }
             group("Acting Position")
             {
                 Caption = 'Acting Position';
                 Editable = false;
+                Visible = false;
 
                 field("Acting No"; Rec."Acting No")
                 {
@@ -611,7 +627,7 @@ page 52178 "Trustee Employee Card"
             group("Important Dates")
             {
                 Caption = 'Important Dates';
-
+                Visible = false;
                 field("Date Of Join"; Rec."Date Of Join")
                 {
                     ToolTip = 'Specifies the value of the Date Of Join field';
@@ -650,7 +666,7 @@ page 52178 "Trustee Employee Card"
             group(Separation)
             {
                 Caption = 'Separation';
-
+                Visible = false;
                 field("Notice Period"; Rec."Notice Period")
                 {
                     ToolTip = 'Specifies the value of the Notice Period field';
@@ -930,6 +946,7 @@ page 52178 "Trustee Employee Card"
                     RunPageLink = "Employee No." = field("No.");
                     RunPageMode = View;
                     ToolTip = 'Open the list of relatives that are registered for the employee.';
+                    Visible = false;
                 }
                 action(Action189)
                 {
@@ -1057,6 +1074,7 @@ page 52178 "Trustee Employee Card"
                     RunObject = page "Leave Application List";
                     RunPageLink = "Employee No" = field("No.");
                     ToolTip = 'Executes the Leave Aplications action';
+                    Visible = false;
                 }
                 action("Professional Membership")
                 {
@@ -1244,7 +1262,7 @@ page 52178 "Trustee Employee Card"
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 ToolTip = 'Executes the Payslip action';
-
+                Visible = false;
                 trigger OnAction()
                 begin
                     PayPeriod.Reset();
@@ -1264,7 +1282,7 @@ page 52178 "Trustee Employee Card"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 ToolTip = 'Executes the Payroll Run action';
-
+                Visible = false;
                 trigger OnAction()
                 begin
                     PayPeriod.Reset();
@@ -1296,7 +1314,7 @@ page 52178 "Trustee Employee Card"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 ToolTip = 'Executes the Mail Payslip action';
-
+                Visible = false;
                 trigger OnAction()
                 var
                     MailBulkPayslips: Report "Mail Bulk Payslips";

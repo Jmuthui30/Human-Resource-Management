@@ -12,12 +12,7 @@ table 52018 "Leave Application"
 
             trigger OnValidate()
             begin
-                /*
-                UserSertup.RESET;
-                UserSertup.SETRANGE("Employee No","Employee No");
-                IF UserSertup.FIND('-') THEN
-                 "User ID":=UserSertup."User ID";
-                */
+
 
                 if EmployeeRec.Get("Employee No") then begin
                     "Employee Name" := EmployeeRec.FullName();
@@ -25,9 +20,10 @@ table 52018 "Leave Application"
                     "Shortcut Dimension 1 Code" := EmployeeRec."Global Dimension 1 Code";
                     "Shortcut Dimension 2 Code" := EmployeeRec."Global Dimension 2 Code";
                     "Mobile No" := EmployeeRec."Phone No.";
+                    "Email Adress" := LowerCase(employeerec."Company E-Mail");// Convert to lower case
+
                 end;
-                // else
-                //Error(EmployeeDoesNotExistErr, "Employee No");
+
 
             end;
         }
@@ -61,13 +57,6 @@ table 52018 "Leave Application"
                 if xRec.Status <> Status::Open then
                     Error('You cannot change a document an approved document');
 
-                // if GuiAllowed then begin
-                //     LeaveApplication.SetRange("Employee No", "Employee No");
-                //     LeaveApplication.SetRange("Leave Code", "Leave Code");
-                //     LeaveApplication.SetFilter(Status, '%1|%2', LeaveApplication.Status::Open, LeaveApplication.Status::"Pending Approval");
-                //     if LeaveApplication.FindFirst() then
-                //         Error(OpenPendingLeaveErr, "Leave Code", "Application No");
-                // end;
 
                 if EmployeeRec.Get("Employee No") then begin
                     LeaveTypes.Get("Leave Code");
@@ -82,8 +71,12 @@ table 52018 "Leave Application"
 
                     "Date of Joining Company" := EmployeeRec."Date Of Join";
 
-                    if GuiAllowed then
-                        HRmgt.GetLeaveEntitlement(EmployeeRec, LeaveTypes, "Leave Entitlment", "Leave Earned to Date");
+
+                    "Leave Earned to Date" := HRManagement.GetLeaveDaysEarnedToDate(employeerec, "Leave Code");
+
+                    // if GuiAllowed then
+
+                    //HRmgt.GetLeaveEntitlement(EmployeeRec, LeaveTypes, "Leave Entitlment", "Leave Earned to Date");
                 end;
             end;
         }
@@ -658,7 +651,7 @@ table 52018 "Leave Application"
             "Shortcut Dimension 1 Code" := EmployeeRec."Global Dimension 1 Code";
             "Shortcut Dimension 2 Code" := EmployeeRec."Global Dimension 2 Code";
             "Responsibility Center" := EmployeeRec."Responsibility Center";
-            "Email Adress" := EmployeeRec."Company E-Mail";
+            // "Email Adress" := EmployeeRec."Company E-Mail";
         end else
             Validate("Employee No");
 
@@ -699,6 +692,8 @@ table 52018 "Leave Application"
         Error009: Label 'You cannot take a Leave less than 1 Day';
         Description: Text[30];
         Dsptn: Text[30];
+        HRManagement: Codeunit "HR Management";
+        LeaveEarnedToDate: Decimal;
 
 
     procedure FindMaturityDate()
@@ -720,6 +715,15 @@ table 52018 "Leave Application"
         DimMgt.SaveDefaultDim(Database::"Leave Application", "Employee No", FieldNumber, ShortcutDimCode);
         Modify();
     end;
+
+
+    // procedure GetLeaveEarnedToDate(LeaveTypeCode: Code[20])
+    // var
+    //     HRManagement: Codeunit "HR Management";
+    //     LeaveEarnedToDate: Decimal;
+    // begin
+    //     LeaveEarnedToDate := HRManagement.GetLeaveDaysEarnedToDate(Rec, LeaveTypeCode);
+    // end;
 }
 
 

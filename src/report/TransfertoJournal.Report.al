@@ -1,3 +1,12 @@
+
+
+
+
+
+
+
+
+//*********************************************************org
 report 52045 "Transfer to Journal"
 {
     ApplicationArea = All;
@@ -225,10 +234,7 @@ report 52045 "Transfer to Journal"
                                 GenJnline."Gen. Prod. Posting Group" := '';
                                 GenJnline."VAT Bus. Posting Group" := '';
                                 GenJnline."Emp Payroll Period" := Payday;
-                                //            IF Ded.Loan THEN BEGIN
-                                //              GenJnline."Applies-to Doc. No.":=AssignMatrix."Reference No";
-                                //              GenJnline.VALIDATE("Applies-to Doc. No.");
-                                //            END;
+
                                 TotalCredits := TotalCredits + AssignMatrix.Amount;
                                 if GenJnline.Amount <> 0 then
                                     GenJnline.Insert();

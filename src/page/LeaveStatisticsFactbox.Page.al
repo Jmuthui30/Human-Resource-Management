@@ -28,6 +28,7 @@ page 52167 "Leave Statistics Factbox"
                     ToolTip = 'Specifies the value of the Leave Earned To Date field.';
                     Caption = 'Leave Earned To Date';
                 }
+                //field()
                 field("Recalled Days"; Rec."Leave Recall Days")
                 {
                     ToolTip = 'Specifies the value of the Recalled Days field.';
@@ -64,6 +65,7 @@ page 52167 "Leave Statistics Factbox"
     procedure GetLeaveEarnedToDate(LeaveTypeCode: Code[20])
     begin
         LeaveEarnedToDate := HRManagement.GetLeaveDaysEarnedToDate(Rec, LeaveTypeCode);
+        // Rec.leave
     end;
 }
 

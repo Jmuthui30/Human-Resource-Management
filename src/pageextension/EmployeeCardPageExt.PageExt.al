@@ -526,6 +526,11 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Debtor Code field for Payroll Loan purposes';
             }
+            field("Salary Advance Debtors"; Rec."Salary Advance Debtors")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Salary Advance Debtors field for Payroll Loan purposes';
+            }
             field("Employee Type"; Rec."Employee Type")
             {
                 ToolTip = 'Specifies the value of the Employee Type field';
@@ -742,11 +747,23 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
             {
                 //Editable = false;
                 Caption = 'Anniversary Details';
+                field("Starting Period"; Rec."Starting Period")
+                {
+                    ToolTip = 'Specifies the value of the Starting Period field';
+                    ApplicationArea = All;
 
+                }
+                field("Year Serviced"; Rec."Year Serviced")
+                {
+                    ToolTip = 'Specifies the value of the Year Serviced field';
+                    ApplicationArea = All;
+                }
                 field("Incremental Month"; Rec."Incremental Month")
                 {
                     ToolTip = 'Specifies the value of the Incremental Month field';
                     ApplicationArea = All;
+                    Caption = '';
+                    Visible = false;
                 }
 
                 field("Last Increment Date"; Rec."Last Increment Date")
@@ -918,16 +935,21 @@ pageextension 52001 "EmployeeCardPageExt" extends "Employee Card"
                 ToolTip = 'Executes the Appointment Checklist action';
                 ApplicationArea = All;
             }
+            // action("Employee Leaves")
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Employee Leaves';
+            //     Image = Alerts;
+            //     Promoted = true;
+            //     PromotedCategory = Process;
+            //     RunObject = Page "Employee Leaves Card";
+            //     RunPageLink = "No." = FIELD("No.");
+            // }
             action("Leave Aplications")
             {
                 Image = JobResponsibility;
                 Promoted = false;
-                //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                //PromotedCategory = Category4;
-                //The property 'PromotedIsBig' can only be set if the property 'Promoted' is set to 'true'
-                //PromotedIsBig = true;
-                //The property 'PromotedOnly' can only be set if the property 'Promoted' is set to 'true'
-                //PromotedOnly = true;
+
                 RunObject = page "Leave Application List";
                 RunPageLink = "Employee No" = field("No.");
                 ToolTip = 'Executes the Leave Aplications action';

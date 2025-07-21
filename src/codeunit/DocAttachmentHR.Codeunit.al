@@ -44,6 +44,12 @@ codeunit 52009 "Doc Attachment HR"
                     RecNo := FieldRef.Value;
                     DocumentAttachment.SetRange("No.", RecNo);
                 end;
+            Database::"CH Company information":
+                begin
+                    FieldRef := RecRef.Field(1);
+                    RecNo := FieldRef.Value;
+                    DocumentAttachment.SetRange("No.", RecNo);
+                end;
         end;
     end;
 
@@ -56,6 +62,7 @@ codeunit 52009 "Doc Attachment HR"
         EmpSeparation: Record "Employee Separation";
         LeaveApplication: Record "Leave Application";
         PayrollRequests: Record "Payroll Requests";
+        CHCompanyInform: Record "CH Company information";
     begin
         case DocumentAttachment."Table ID" of
             Database::"Allowance Register":
@@ -94,6 +101,12 @@ codeunit 52009 "Doc Attachment HR"
                     if PayrollRequests.Get(DocumentAttachment."No.") then
                         RecRef.GetTable(PayrollRequests);
                 end;
+            Database::"CH Company information":
+                begin
+                    RecRef.Open(Database::"CH Company information");
+                    if CHCompanyInform.Get(DocumentAttachment."No.") then
+                        RecRef.GetTable(CHCompanyInform);
+                end;
         end;
     end;
 
@@ -108,6 +121,7 @@ codeunit 52009 "Doc Attachment HR"
             Database::"Employee Discplinary",
             Database::Applicants,
             Database::"Employee Separation",
+            Database::"CH Company information",
             Database::"Payroll Requests":
                 begin
                     FieldRef := RecRef.Field(1);

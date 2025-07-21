@@ -91,6 +91,7 @@ page 52043 "Leave Application Card"
                     trigger OnValidate()
                     begin
                         CurrPage.LeaveStatistics.Page.GetLeaveEarnedToDate(Rec."Leave Code");
+                        //rec."Leave Earned to Date" := HRManagement.GetLeaveDaysEarnedToDate(Rec, Rec."Leave Code");
                         CurrPage.Update();
                     end;
                 }
@@ -215,6 +216,7 @@ page 52043 "Leave Application Card"
                         Rec.TestField("Leave Code");
 
                         HRMgt.CheckIfLeaveRelieversExist(Rec);
+                        HRMgt.CheckDocumentAttachmentExist(Rec);
 
                         if ApprovalsMgmt.CheckLeaveRequestWorkflowEnabled(Rec) then
                             ApprovalsMgmt.OnSendLeaveRequestApproval(Rec);
@@ -353,6 +355,8 @@ page 52043 "Leave Application Card"
         ApprovalManagement: Codeunit "Approval Mgt HR Ext";
         ApprovalsMgmt: Codeunit "Approval Mgt HR Ext";
         HRMgt: Codeunit "HR Management";
+        HRManagement: Codeunit "HR Management";
+        DocumentAttachment: Record "Document Attachment";
 }
 
 

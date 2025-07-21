@@ -58,6 +58,26 @@ report 52020 "Employment Contracts"
             column(Contract_End; Employee."Contract End Date")
             {
             }
+            column(RemainingPeriod; RemainingPeriod) { }
+            column(DurationPeriod; DurationPeriod) { }
+            trigger OnAfterGetRecord()
+            begin
+
+                if Employee."Contract End Date" = 0D then
+                    DurationPeriod := 'Indefinite'
+                else
+                    DurationPeriod := HRDates.DetermineAge(Employee."Contract Start Date", Employee."Contract End Date");
+
+                //**********************************************************************************
+                if Employee."Contract End Date" = 0D then
+                    RemainingPeriod := 'No EndDate'
+                else if Employee."Contract End Date" < Today then
+                    RemainingPeriod := 'Expired'
+                else
+                    RemainingPeriod := HRDates.DetermineAge(Today, Employee."Contract End Date");
+
+
+            end;
         }
     }
 
@@ -85,6 +105,10 @@ report 52020 "Employment Contracts"
     var
         CompanyInfo: Record "Company Information";
         EmployeeRec: Record Employee;
+        RemainingPeriod: Text;
+        DurationPeriod: text;
+        HRDates: Codeunit "Dates Management";
+
 
     procedure GetEmployeeName(No: Code[20]): Text[250]
     begin

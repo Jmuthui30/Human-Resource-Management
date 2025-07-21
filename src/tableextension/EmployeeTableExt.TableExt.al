@@ -1466,6 +1466,29 @@ Error(EmployeeRetiredErr); */
 
             TableRelation = Location.Code;
         }
+        field(53021; "Year Serviced"; DateFormula)
+        {
+
+        }
+        field(53022; "Starting Period"; Date)
+        {
+
+        }
+        field(53023; "Ending Period"; Date)
+        {
+
+        }
+        field(53024; "Salary Advance Debtors"; Code[20])
+        {
+            DataClassification = CustomerContent;
+            TableRelation = Customer;
+            Caption = 'Salary Advance Debtors';
+
+            trigger OnValidate()
+            begin
+
+            end;
+        }
     }
 
     fieldgroups
