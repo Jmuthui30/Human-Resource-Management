@@ -835,5 +835,7 @@ permissionset 52000 HRPermissions
         table "CH Company information" = X,
         report "Cash payment Report" = X,
         page "CH Company Inform" = X,
-        page Region = X;
+        page Region = X,
+        tabledata "Leave Application Type" = RIMD,
+        table "Leave Application Type" = X;
 }

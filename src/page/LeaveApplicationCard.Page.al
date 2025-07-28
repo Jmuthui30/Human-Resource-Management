@@ -8,7 +8,6 @@ page 52043 "Leave Application Card"
     PromotedActionCategories = 'New,Process,Report,Approvals,Attachments';
     RefreshOnActivate = true;
     SourceTable = "Leave Application";
-
     layout
     {
         area(content)
@@ -78,21 +77,17 @@ page 52043 "Leave Application Card"
                     Editable = false;
                     ToolTip = 'Specifies the value of the Shortcut Dimension 2 Code field';
                 }
-                field("Leave Period"; Rec."Leave Period")
-                {
-                    Enabled = false;
-                    ToolTip = 'Specifies the value of the Leave Period field';
-                }
+
                 field("Leave Code"; Rec."Leave Code")
                 {
                     Caption = 'Leave Type';
                     ToolTip = 'Specifies the value of the Leave Type field';
-
+                    Visible = false;
                     trigger OnValidate()
                     begin
-                        CurrPage.LeaveStatistics.Page.GetLeaveEarnedToDate(Rec."Leave Code");
+                        // CurrPage.LeaveStatistics.Page.GetLeaveEarnedToDate(Rec."Leave Code");
                         //rec."Leave Earned to Date" := HRManagement.GetLeaveDaysEarnedToDate(Rec, Rec."Leave Code");
-                        CurrPage.Update();
+                        //CurrPage.Update();
                     end;
                 }
                 field("Leave Status"; Rec."Leave Status")
@@ -105,45 +100,9 @@ page 52043 "Leave Application Card"
                     Editable = false;
                     ToolTip = 'Specifies the value of the Status field';
                 }
-                label("Current Application Details")
-                {
-                    Caption = 'Current Application Details';
-                    Style = Strong;
-                    StyleExpr = true;
-                }
-                field("Leave Earned to Date"; Rec."Leave Earned to Date")
-                {
-                    ToolTip = 'Specifies the value of the Leave Earned to Date field';
-                }
-                field("Days Applied"; Rec."Days Applied")
-                {
-                    NotBlank = true;
-                    ToolTip = 'Specifies the value of the Days Applied field';
 
-                    trigger OnValidate()
-                    begin
-                        CurrPage.Update();
-                    end;
-                }
-                field("Start Date"; Rec."Start Date")
-                {
-                    Caption = 'From';
-                    NotBlank = true;
-                    ToolTip = 'Specifies the value of the From field';
-                }
-                field("End Date"; Rec."End Date")
-                {
-                    Caption = 'To';
-                    Editable = false;
-                    NotBlank = true;
-                    ToolTip = 'Specifies the value of the To field';
-                }
-                field("Resumption Date"; Rec."Resumption Date")
-                {
-                    Editable = false;
-                    NotBlank = true;
-                    ToolTip = 'Specifies the value of the Resumption Date field';
-                }
+
+
                 field("Duties Taken Over By"; Rec."Duties Taken Over By")
                 {
                     Visible = false;
@@ -162,11 +121,12 @@ page 52043 "Leave Application Card"
                     ToolTip = 'Specifies the value of the Leave Allowance Payable field';
                 }
             }
-            part(Relievers; "Leave Relievers")
+            part("Leave Application Type"; "Leave Application Type")
             {
                 SubPageLink = "Leave Code" = field("Application No");
                 Editable = Rec."Status" = Rec."Status"::Open;
             }
+
         }
         area(factboxes)
         {
@@ -187,6 +147,11 @@ page 52043 "Leave Application Card"
                 SubPageLink = "Table ID" = CONST(52146523),
                               "No." = FIELD("Application No");
             }
+            //   part("Leave Relievers"; "Leave Relievers")
+            // {
+            //     SubPageLink = "Leave Code" = field("Leave Code");
+            //     // Editable = Rec."Status" = Rec."Status"::Open;
+            // }
 
         }
     }

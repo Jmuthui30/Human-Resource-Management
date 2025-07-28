@@ -24,6 +24,7 @@ page 52920 "Employee Timesheet line"
                 {
                     ToolTip = 'Specifies the value of the Donor Code field';
                     ApplicationArea = all;
+                    Visible=false;
                 }
                 field("Project Code"; Rec."Project Code")
                 {
@@ -47,15 +48,14 @@ page 52920 "Employee Timesheet line"
                 }
                 field("No."; Rec."No.")
                 {
-                    // Visible = false;
+                    Visible = false;
                     Editable = false;
                     ToolTip = 'Specifies the value of the Billable Time field';
                 }
                 field("Employee No."; Rec."Employee No.")
                 {
                     ToolTip = 'Specifies the value of the Billable Time field';
-
-
+                    Visible = false;
                 }
 
             }

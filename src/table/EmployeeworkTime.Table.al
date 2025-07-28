@@ -60,9 +60,8 @@ table 52921 "Employee Work Time"
         field(29; "Total Working Days"; Integer) { }
         field(50009; "Payroll Period"; Date)
         {
-            FieldClass = FlowFilter;
-            TableRelation = "Payroll Period"."Starting Date";
-            ;
+            // FieldClass = FlowFilter;
+            TableRelation = "Payroll Period";
             Caption = 'Pay Period Filter';
         }
         field(31; "Employee Total Personal Cost"; Decimal)

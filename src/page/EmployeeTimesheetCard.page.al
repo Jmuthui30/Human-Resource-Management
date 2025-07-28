@@ -30,6 +30,7 @@ page 52902 "Employee Timesheet card"
                 field(Position; Rec.Position)
                 {
                     Editable = false;
+                    Visible = false;
                     ToolTip = 'Specifies the value of the Work Date field';
 
                 }

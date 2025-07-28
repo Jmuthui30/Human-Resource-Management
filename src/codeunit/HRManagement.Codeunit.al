@@ -2930,7 +2930,7 @@ codeunit 52001 "HR Management"
         LeaveEntitlement := 0;
         DaysEarnedPerMonth := 0;
 
-        //  Employee.TestField("Country/Region Code");
+        Employee.TestField("Country/Region Code");
 
         LeaveEntitlementRec.Reset();
         LeaveEntitlementRec.SetRange("Leave Type Code", LeaveTypeRec.Code);
