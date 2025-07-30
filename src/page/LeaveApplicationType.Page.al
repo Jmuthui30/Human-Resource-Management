@@ -1,4 +1,4 @@
-page 52897 "Leave Application Type"
+page 52310 "Leave Application Type"
 {
     ApplicationArea = All;
     PageType = ListPart;
@@ -16,17 +16,20 @@ page 52897 "Leave Application Type"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Leave Code';
+                    Visible = false;
                 }
                 field("Employee No"; Rec."Employee No")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Employee No';
+                    Visible = false;
                 }
                 field("Leave Period"; Rec."Leave Period")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Leave Period';
-
+                    Editable = false;
+                    Visible = false;
 
                 }
                 field("Leave Type"; Rec."Leave Type")
@@ -35,9 +38,7 @@ page 52897 "Leave Application Type"
                     ToolTip = 'Leave Type';
                     trigger OnValidate()
                     begin
-                        //  CurrPage.LeaveStatistics.Page.GetLeaveEarnedToDate(Rec."Leave Code");
-                        //rec."Leave Earned to Date" := HRManagement.GetLeaveDaysEarnedToDate(Rec, Rec."Leave Code");
-                        CurrPage.Update();
+
                     end;
                 }
                 field("Leave Earned to Date"; Rec."Leave Earned to Date")
@@ -86,24 +87,24 @@ page 52897 "Leave Application Type"
                 }
                 field("Staff No"; Rec."Staff No")
                 {
+                    ApplicationArea = All;
+                    Caption = 'Reliever No';
                     ToolTip = 'Specifies the value of the Staff No field';
                 }
                 field("Staff Name"; Rec."Staff Name")
                 {
+                    ApplicationArea = All;
+                    Caption = 'Reliever Name';
                     ToolTip = 'Specifies the value of the Staff Name field';
                 }
             }
-
-
-
-
-
         }
     }
 
     actions
     {
     }
+
 }
 
 

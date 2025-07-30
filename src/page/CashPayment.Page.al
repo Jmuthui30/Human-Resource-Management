@@ -1,4 +1,4 @@
-page 52993 "Cash Payment"
+page 52318 "Cash Payment"
 {
     PageType = List;
     ApplicationArea = All;

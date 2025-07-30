@@ -1,4 +1,4 @@
-table 52899 "CH Company information"
+table 52177 "CH Company information"
 {
     DataClassification = ToBeClassified;
 

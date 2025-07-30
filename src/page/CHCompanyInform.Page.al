@@ -1,4 +1,4 @@
-page 52823 "CH Company Inform"
+page 52309 "CH Company Inform"
 {
     ApplicationArea = All;
     PageType = List;

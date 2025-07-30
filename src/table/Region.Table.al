@@ -1,4 +1,4 @@
-table 52999 Region
+table 52188 Region
 {
     Caption = 'Region';
     LookupPageID = Region;

@@ -1,4 +1,4 @@
-report 52959 "Appl. Submit J list"
+report 52120 "Appl. Submit J list"
 {
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;

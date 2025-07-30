@@ -1,4 +1,4 @@
-table 52912 "Employee Working sch Line N"
+table 52181 "Employee Working sch Line N"
 {
     DataClassification = ToBeClassified;
 

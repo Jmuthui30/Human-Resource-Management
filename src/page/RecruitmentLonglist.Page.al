@@ -1,4 +1,4 @@
-page 52991 "Recruitment Longlist"
+page 52317 "Recruitment Longlist"
 {
     ApplicationArea = All;
     CardPageID = "Long List Card";

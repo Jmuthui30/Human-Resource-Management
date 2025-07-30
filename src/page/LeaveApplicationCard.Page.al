@@ -126,6 +126,11 @@ page 52043 "Leave Application Card"
                 SubPageLink = "Leave Code" = field("Application No");
                 Editable = Rec."Status" = Rec."Status"::Open;
             }
+            part(Relievers; "Leave Relievers")
+            {
+                SubPageLink = "Leave Code" = field("Application No");
+                Editable = Rec."Status" = Rec."Status"::Open;
+            }
 
         }
         area(factboxes)

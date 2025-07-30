@@ -1,4 +1,4 @@
-table 52176 "Leave Application Type"
+table 52276 "Leave ApplicationType"
 {
     DataClassification = CustomerContent;
     Caption = 'Leave Application Type';
@@ -359,11 +359,11 @@ table 52176 "Leave Application Type"
 
     keys
     {
-        key(Key1; "Leave Code", "Employee No", "Entry No.")
+        key(Key1; "Entry No.")
         {
             Clustered = true;
         }
-        key(key2; "Entry No.")
+        key(key2; "Leave Code", "Employee No")
         { }
 
     }
@@ -371,7 +371,7 @@ table 52176 "Leave Application Type"
 
     trigger OnInsert()
     begin
-        "Entry No." := "Entry No." + 2;
+        "Entry No." := "Entry No." + 1;
         "Application Date" := Today;
 
         FindMaturityDate();

@@ -1,4 +1,4 @@
-page 52989 "Long List Card"
+page 52315 "Long List Card"
 {
     ApplicationArea = All;
     InsertAllowed = false;

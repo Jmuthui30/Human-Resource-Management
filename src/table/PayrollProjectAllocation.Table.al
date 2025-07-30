@@ -1,4 +1,4 @@
-Table 52908 "Payroll Project Allocation"
+Table 52178 "Payroll Project Allocation"
 {
 
     fields

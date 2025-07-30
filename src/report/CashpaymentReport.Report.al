@@ -1,4 +1,4 @@
-report 52345 "Cash payment Report"
+report 52118 "Cash payment Report"
 {
     ApplicationArea = All;
     DefaultLayout = RDLC;

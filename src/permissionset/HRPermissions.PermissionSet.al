@@ -837,5 +837,8 @@ permissionset 52000 HRPermissions
         page "CH Company Inform" = X,
         page Region = X,
         tabledata "Leave Application Type" = RIMD,
-        table "Leave Application Type" = X;
+        table "Leave Application Type" = X,
+        tabledata "Leave ApplicationType" = RIMD,
+        table "Leave ApplicationType" = X,
+        page "Leave Application Type" = X;
 }

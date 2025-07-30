@@ -1,4 +1,4 @@
-table 52926 "Cash Payment"
+table 52187 "Cash Payment"
 {
     DataClassification = ToBeClassified;
 

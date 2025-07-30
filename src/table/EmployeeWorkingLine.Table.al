@@ -1,4 +1,4 @@
-table 52919 "Employee Working  Line"
+table 52184 "Employee Working  Line"
 {
     DataClassification = ToBeClassified;
 

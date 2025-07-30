@@ -1,4 +1,4 @@
-report 52994 "Payslipx New"
+report 52122 "Payslipx New"
 {
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
